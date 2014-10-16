@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <style type="text/css">
+      body{
+        display: box;
+        box-orient: vertical;
+        /*background-color: rgb(150,150,150);*/
+        /*text-align: center;*/
+        }
+
+      /*input{
+        width: 300px;
+        /*margin: 0 auto;*/
+
+
+      form{
+        width: 600px;
+        /*height: 40px;*/
+        margin: 0px auto;
+        /*border: 1px solid #665544;*/
+
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+      }
+
+      #error{
+        width: 600px;
+        /*height: 150px;*/
+        margin: 0px auto;
+        text-align: center;
+      }
+
+      #comment{
+        width: 600px;
+        /*height: 150px;*/
+        margin: 0px auto;
+        background-color: #efefef;
+      }
+
+      #iteminfo{
+        width: 600px;
+        /*height: 500px;*/
+        margin: 0px auto;
+        background-color: #efefef;
+        /*border: 1px solid #665544;*/
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+        }
+
+      img{
+        width: 100px;
+        height: 100px;
+        margin: 10px auto;
+        }
+
+
+
+      </style>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>商品信息</title>
+
+    <!-- Bootstrap -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+  </head>
+
+  <body>
+
+    <div id="error">
+    {% if error %}<p class=error>没有找到您需要的商品信息！{% endif %}</p>
+    </div>
+    {% if not error %}
+    <form><h4>发布推荐商品 </h4></form>
+    <div id="iteminfo">
+      <div>
+      <form class="form-inline" action="" id="title">
+        <label for="title">名称：</label>
+        <input type="text" id="title" size="80" value="{{ title }}" />
+      </form>
+      </div>
+      <!-- hr / -->
+      <div>
+      <form class="form-inline" action="" id="price">
+        <label for="price">价格：</label>
+        <input type="text" id="price" size="20" placeholder="{{ price }}" />
+      </form>
+      </div>
+
+      <div class="form-inline" id="imginfo">
+        <div><label for="inputimg" class="control-label">图片：</label></div>
+        {% for link in links %}
+        <img src={{ link }} width="100" height="100" />
+        {% endfor %}
+        <div>
+        <!--button type="submit" name="modified_img" class="btn btn-primary"-->
+        </div>
+         </div>
+    </div>
+
+    <hr />
+
+  <form class="add-comment" id="comment">
+  <p>请输入您对这件商品的评论><br /></p>
+    <textarea name="content" rows="5" cols="70" placeholder="快来添加您的评论吧"></textarea>
+  </form>
+
+  <form action="{{url_for('item_store', title=title, price=price, links=links)}}" method="post">
+  <button type="submit" name="submit" class="btn btn-primary">submit</button>
+  </form>
+
+    {% endif %}
+  </body>
+</html>

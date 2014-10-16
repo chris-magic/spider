@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+
+    <style type="text/css">
+      body{
+        display: box;
+        box-orient: vertical;
+        /*background-color: rgb(150,150,150);*/
+        /*text-align: center;*/
+        }
+
+      input{
+        width: 300px;
+        /*margin: 0 auto;*/
+      }
+
+      form{
+        width: 600px;
+        height: 80px;
+        margin: 0px auto;
+        /*border: 1px solid #665544;*/
+
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+      }
+
+      #description{
+        width: 600px;
+        height: 200px;
+        margin: 0px auto;
+        /*text-align: left;
+        /*background-color: #efefef;*/
+      }
+
+
+      </style>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>发布礼品</title>
+
+    <!-- Bootstrap -->
+    <!-- link href="css/bootstrap.min.css" rel="stylesheet" -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
+  </head>
+  <body>
+
+    <form></form>
+
+     <div id="input-url">
+
+      <form class="form-inline" action="{{url_for("get_url")}}" method="post" >
+        <p>请输入商品链接</p>
+        <input type="text" name="url" class="form-control" size="50" placeholder="请输入链接">
+        <button type="submit" class="btn btn-primary">提交</button>
+      </form>
+      </div>
+
+
+    <hr />
+
+    <div class="row" id="description">
+    <!--div class="col-md-4 col-md-offset-2" -->
+  <p>支持网站：<br />天猫，淘宝，亚马逊，knewone，京东商城</p>
+  <!--/div -->
+  </div>
+
+  </body>
+</html>
