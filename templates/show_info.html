@@ -76,7 +76,7 @@
     {% if error %}<p class=error>没有找到您需要的商品信息！{% endif %}</p>
     </div>
     {% if not error %}
-    <form><h4>发布推荐商品 </h4></form>
+    <form><h4>发布推荐商品 </h4><form>
     <div id="iteminfo">
       <div>
       <form class="form-inline" action="" id="title">
@@ -106,11 +106,14 @@
     <hr />
 
   <form class="add-comment" id="comment">
-  <p>请输入您对这件商品的评论><br /></p>
+  <p>请输入您对这件商品的评论<br /></p>
     <textarea name="content" rows="5" cols="70" placeholder="快来添加您的评论吧"></textarea>
   </form>
 
-  <form action="{{url_for('item_store', title=title, price=price, links=links)}}" method="post">
+  <form action="{{url_for('web.item_store')}}" method="post">
+  <input type="hidden" name="title" value="{{ title }}" />
+  <input type="hidden" name="price" value="{{ price }}" />
+  <input type="hidden" name="links" value="{{ links }}" />
   <button type="submit" name="submit" class="btn btn-primary">submit</button>
   </form>
 
