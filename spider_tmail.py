@@ -7,59 +7,49 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-url="http://item.taobao.com/item.htm?spm=a219r.lm869.0.0.NufoDi&id=13878246530&ns=1"
-headers={"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Encoding":"gzip,deflate,sdch",
-        "Accept-Language":"zh-CN,zh;q=0.8",
-        "Cache-Control":"max-age=0",
-        "Connection":"keep-alive"}
-
 image_path = 'image'
 
 
-def spider():
-    html = get_info()
-    price = analyze_info(html)
-    print price
-   # print title
-
-
-def get_info():
-    url = raw_input("please input the website:")
+def analyze_tmail(url, headers):
+    #get the page
     resp = requests.get(url, headers=headers)
     html = resp.content
-    #print html
-    return html
-
-
-def analyze_tmail():
-    #get the page
-    html = get_info()
     html = html.decode('gbk').encode('utf-8')
     soup = BeautifulSoup(html)
 
-    #title
-    title = soup.html.head.title.string
-    print title
+    try:
+        #title
+        title = soup.html.head.title.string.encode('utf-8')
+        s1 = u"-tmall.com天猫"
+        s1 = s1.encode('utf-8')
+        title = title.replace(s1,'')
+        print title
 
     #price
-    price = soup.find(attrs={'class':"originPrice"}).string
-    print price
+        price = soup.find(attrs={'class':"originPrice"}).string.encode('utf-8')
+        #print price
+
 
     #image
-    link = soup.find(id="J_ImgBooth")
-    link = link['src']
-    print link
-    image_get = requests.get(url=link, headers=headers)
-    img_content = image_get.content
+        links = soup.find(id="J_UlThumb").find_all('img')
+    #print link
 
-    file_name = str(int(time.time()))+'.jpg'
-    file_path = os.path.join(image_path,file_name)
-    image = open(file_path,'wb')
-    image.write(img_content)
-    image.close()
+        for i,link in enumerate(links):
+            links[i] = link['src'].split('_60')[0]
+        #print link
+        #image_get = requests.get(url=link, headers=headers)
+        #img_content = image_get.content
+
+        #file_name = str(int(time.time()*1000))+'.jpg'
+        #file_path = os.path.join(image_path,file_name)
+        #image = open(file_path,'wb')
+        #image.write(img_content)
+        #image.close()
    # return link
+        return {'t':title, 'p':price, 'l':links}
 
+    except:
+        return {}
 
 
 

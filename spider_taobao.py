@@ -17,33 +17,32 @@ def analyze_tao(url, headers):
     soup = BeautifulSoup(html)
 
     #title
-    title = soup.find('title').string.encode('utf-8')
-    s1 = u"-淘宝"
-    s1 = s1.encode('utf-8')
-    title = title.replace(s1,'')
-    print title
+    try:
+        title = soup.find('title').string.encode('utf-8')
+        s1 = u"-淘宝"
+        s1 = s1.encode('utf-8')
+        title = title.replace(s1,'')
+        print title
 
     #price
-    try:
+
         price = soup.find(attrs={'class':"tb-rmb-num"}).string.encode('utf-8')
-    except:
-        return {}
     #print price
-    url_p = "http://detailskip.taobao.com/json/mjsDetailNew.htm?user_id=1072417851"
-    resp1 = requests.get(url_p, headers=headers)
-    f = open('page.html', 'w')
-    html1 = resp1.content
+        url_p = "http://detailskip.taobao.com/json/mjsDetailNew.htm?user_id=1072417851"
+        resp1 = requests.get(url_p, headers=headers)
+        f = open('page.html', 'w')
+        html1 = resp1.content
     #print html1
-    f.write(html1)
-    f.close()
+        #f.write(html1)
+    #f.close()
     #print html1
 
     #image
-    links = soup.find(id="J_UlThumb").find_all('img')
+        links = soup.find(id="J_UlThumb").find_all('img')
 
-    for i,link in enumerate(links):
+        for i,link in enumerate(links):
 
-        links[i] = link['data-src'].split('_50')[0]
+            links[i] = link['data-src'].split('_50')[0]
         #print link
         #image_get = requests.get(url=link, headers=headers)
         #img_content = image_get.content
@@ -55,8 +54,10 @@ def analyze_tao(url, headers):
         #image.write(img_content)
         #image.close()
     #return title
-    return {'t':title, 'p':price, 'l':links}
+        return {'t':title, 'p':price, 'l':links}
 
+    except:
+        return {}
 
 
    # return link
