@@ -17,38 +17,20 @@ def analyze_kno(url, headers):
     soup = BeautifulSoup(html)
 
     try:
-    #title
+        #title
         title = url.split('/')[-1]
-
-    #price
+        #price
         price = soup.find(id="price").string.encode('utf-8')
-    #print price
-
         #image
         links = soup.find(attrs={'class':"carousel-inner"}).find_all('img')
         #print link
         for i,link in enumerate(links):
-
             links[i] = link['src']
-        #print link
-        #if re.search(u"gif", url) is not None:
-         #   continue
-        #if re.search(u"gif", url) is None:
-         #   image_get = requests.get(url=link, headers=headers)
-          #  img_content = image_get.content
 
-           # file_name = str(int(time.time()*1000))+'.jpg'
-            #file_path = os.path.join(image_path,file_name)
-            #image = open(file_path,'wb')
-            #image.write(img_content)
-            #image.close()
-   # return link
         return {'t':title, 'p':price, 'l':links}
 
     except:
         return {}
-
-
 
 
 if __name__ == '__main__':

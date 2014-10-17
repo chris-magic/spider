@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 image_path = 'image'
 
+
 def analyze_amazon(url, headers):
     #get the page
     resp = requests.get(url, headers=headers)
@@ -16,8 +17,8 @@ def analyze_amazon(url, headers):
     soup = BeautifulSoup(html)
     price = None
     links = []
-    #title = None
-    #title
+
+
     try:
         title1 = soup.head.title
         print title1
@@ -28,7 +29,7 @@ def analyze_amazon(url, headers):
 
         if price_try is not None:
             price = soup.find(attrs={'class':"priceLarge"}).string.encode('utf-8')
-        #electric
+
         if title1 is None:
             title = soup.find(id="btAsinTitle").string.encode('utf-8')
 
@@ -37,15 +38,12 @@ def analyze_amazon(url, headers):
                 links[i] = link.img['src']
                 print links[i]
 
-
-    #traditional book
         if title1 is not None:
             title = title1.string.encode('utf-8')
             s1 = u"【摘要 书评 试读】图书"
             s1 = s1.encode('utf-8')
             title = title.replace(s1,'')
-
-    #image
+            #image
             links = soup.find(id="thumb-strip").find_all('img')
             for i,link in enumerate(links):
                 links[i] = link['src'].split('_SL75')[0] + "_SL500_PIsitb-sticker-arrow-big,TopRight,35,-73_OU28_.jpg"
@@ -54,20 +52,6 @@ def analyze_amazon(url, headers):
 
     except:
         return {}
-        #image_get = requests.get(url=link, headers=headers)
-        #img_content = image_get.content
-
-        #file_name = str(int(time.time()*1000))+'.jpg'
-        #file_path = os.path.join(image_path,file_name)
-        #image = open(file_path,'wb')
-        #image.write(img_content)
-        #image.close()
-   # return link
-
-
-
-
-
 
 
 if __name__ == '__main__':
